@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FlatList, StyleSheet, Text, View, Pressable } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -8,6 +8,16 @@ import DetailScreen from "./Details";
 
 function HomeScreen({ navigation }) {
   const [colorArray, setColorArray] = useState([]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable onPress={addColor} style={{ marginRight: 100 }}>
+          <Text> Add color</Text>
+        </Pressable>
+      ),
+    });
+  });
 
   function renderItem({ item }) {
     return (
@@ -35,9 +45,6 @@ function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={addColor}>
-        <Text> Add new color</Text>
-      </Pressable>
       <FlatList
         style={{ width: "100%" }}
         data={colorArray}

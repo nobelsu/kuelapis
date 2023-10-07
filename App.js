@@ -4,22 +4,30 @@ import { FlatList, StyleSheet, Text, View, Pressable } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import BlockRGB from "./BlockRGB";
-import Details from "./Details";
+import DetailScreen from "./Details";
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   const [colorArray, setColorArray] = useState([]);
 
   function renderItem({ item }) {
-    return <BlockRGB red={item.red} green={item.green} blue={item.blue} />;
+    return (
+      <Pressable
+        onPress={() => {
+          navigation.navigate("Details", item);
+        }}
+      >
+        <BlockRGB red={item.red} green={item.green} blue={item.blue} />
+      </Pressable>
+    );
   }
 
   function addColor() {
     setColorArray([
       ...colorArray,
       {
-        red: Math.random() * 255,
-        green: Math.random() * 255,
-        blue: Math.random() * 255,
+        red: Math.floor(Math.random() * 255),
+        green: Math.floor(Math.random() * 255),
+        blue: Math.floor(Math.random() * 255),
         id: colorArray.length,
       },
     ]);
@@ -47,7 +55,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={Details} />
+        <Stack.Screen name="Details" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

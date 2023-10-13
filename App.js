@@ -25,6 +25,10 @@ function HomeScreen({ navigation }) {
         onPress={() => {
           navigation.navigate("Details", item);
         }}
+        style={{
+          aspectRatio: 1,
+          flex: 0.25,
+        }}
       >
         <BlockRGB red={item.red} green={item.green} blue={item.blue} />
       </Pressable>
@@ -50,6 +54,7 @@ function HomeScreen({ navigation }) {
         data={colorArray}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
+        numColumns={4}
       />
     </View>
   );
